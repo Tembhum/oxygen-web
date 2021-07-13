@@ -6,8 +6,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY frontend/package.json frontend/yarn.lock ./
 
-COPY frontend ./
+RUN yarn
 
-EXPOSE 3000
+COPY frontend ./
 
 RUN yarn build
