@@ -14,8 +14,7 @@ import axios from "axios";
 
 class Dashboard extends React.Component {
   state = {
-    devices: [] ,
-    users: []
+    devices: []
   }
 
   componentDidMount() {
@@ -24,7 +23,11 @@ class Dashboard extends React.Component {
         const devices = res.data.content;
         this.setState({ devices });
       })
-    axios.get('http://localhost:8080/users')
+//    axios.get('http://localhost:8080/users')
+//      .then(res => {
+//        const users = res.data.content;
+//        this.setState({ users });
+//      })
   }
 
   constructor(props) {
@@ -41,8 +44,7 @@ class Dashboard extends React.Component {
     let header = key.map((device, index) => {
         let keyArray = Object.keys(device);
         return keyArray.map((header, sindex) =>
-        {   console.log(header);
-            switch (header ){
+        {   switch (header ){
                 case "deviceId":
                     return <th key={sindex}> # </th>;
                     break;
@@ -66,23 +68,23 @@ class Dashboard extends React.Component {
     return this.state.devices.map((device, index) => {
       const { length, deviceId, barcode, name, status } = device ; //destructuring
       return (
-        <tr key={deviceId} bgcolor={!status ? "grey" : "white"}>
+        <tr key={deviceId} bgcolor={(status == 2) ? "grey" : "white"}>
           <td>
-            <font color={status ? "grey" : "white"}>{deviceId}</font>
+            <font color={(status == 4) ? "grey" : "white"}>{deviceId}</font>
           </td>
           <td>
-            <font color={status ? "grey" : "white"}>{name}</font>
+            <font color={(status == 4) ? "grey" : "white"}>{name}</font>
           </td>
           <td>
-            <font color={status ? "grey" : "white"}>{name}</font>
+            <font color={(status == 4) ? "grey" : "white"}>{barcode}</font>
           </td>
           <td>
             {" "}
             <Button
-              variant={!status ? "outline-light" : "outline-error"}
+              variant={(status == 2) ? "outline-light" : "outline-error"}
               size="sm"
 //              onClick="returnFunction()"
-              disabled={status}
+              disabled={(status == 4)}
             >
               Return
             </Button>{" "}
@@ -90,12 +92,12 @@ class Dashboard extends React.Component {
           <td>
             {" "}
             <Button
-              variant={status ? "outline-success" : "outline-error"}
+              variant={(status == 4) ? "outline-success" : "outline-error"}
               size="sm"
               onClick={() => {
                 this.giveHandler();
               }}
-              disabled={!status}
+              disabled={(status == 2)}
             >
               Give
             </Button>{" "}
@@ -128,7 +130,6 @@ class Dashboard extends React.Component {
                       <p> จำนวนผู้ป่วยที่ได้รับการช่วยเหลือ </p>
                     </div>
                     <div className="icon">
-                      <img src='../images/patient.png' alt='-' />
                       <h1 className="fonticon">Patient</h1>
                     </div>
                   </div>
@@ -140,7 +141,6 @@ class Dashboard extends React.Component {
                       <p> จำนวนเครื่องว่าง/ทั้งหมด </p>
                     </div>
                     <div className="icon">
-                      <img src='../images/oxygen.png' alt='-'/>
                       <h1 className="fonticon">Oxygen</h1>
                     </div>
                   </div>
