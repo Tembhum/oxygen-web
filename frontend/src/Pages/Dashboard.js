@@ -14,7 +14,8 @@ import axios from "axios";
 
 class Dashboard extends React.Component {
   state = {
-    devices: []
+    devices: [] ,
+    users: []
   }
 
   componentDidMount() {
@@ -23,6 +24,7 @@ class Dashboard extends React.Component {
         const devices = res.data.content;
         this.setState({ devices });
       })
+    axios.get('http://localhost:8080/users')
   }
 
   constructor(props) {
@@ -123,9 +125,10 @@ class Dashboard extends React.Component {
                   <div className="card-box bg-blue">
                     <div className="inner">
                       <h3> 13436 </h3>
-                      <p> Patient Summary </p>
+                      <p> จำนวนผู้ป่วยที่ได้รับการช่วยเหลือ </p>
                     </div>
                     <div className="icon">
+                      <img src='../images/patient.png' alt='-' />
                       <h1 className="fonticon">Patient</h1>
                     </div>
                   </div>
@@ -134,9 +137,10 @@ class Dashboard extends React.Component {
                   <div className="card-box bg-green">
                     <div className="inner">
                       <h3> 10/{this.state.devices.length} </h3>
-                      <p> Available/Total </p>
+                      <p> จำนวนเครื่องว่าง/ทั้งหมด </p>
                     </div>
                     <div className="icon">
+                      <img src='../images/oxygen.png' alt='-'/>
                       <h1 className="fonticon">Oxygen</h1>
                     </div>
                   </div>
