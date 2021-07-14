@@ -33,27 +33,23 @@ class Dashboard extends React.Component {
         this.state = devices;
       })
   }
-//
-//  renderTableHeader() {
-//    console.log('Header');
-//    console.log(this.state.devices);
-//    let header = Object.keys(this.state.devices);
-//    return header.map((key, index) => {
-//      if (key != "status") {
-//        return <th key={index}>{key.toUpperCase()}</th>;
-//      }
-//    });
-//  }
-//
+
   renderTableHeader() {
-    console.log('Head');
     let key = this.state.devices;
     let header = key.map((device, index) => {
         let keyArray = Object.keys(device);
         return keyArray.map((header, sindex) =>
-        {
-            if (header != "status"){
-                return <th key={sindex}> {header.toUpperCase()} </th>;
+        {   console.log(header);
+            switch (header ){
+                case "deviceId":
+                    return <th key={sindex}> # </th>;
+                    break;
+                case "barcode":
+                    return <th key={sindex}> หมายเลขเครื่อง </th>;
+                    break;
+                case "name":
+                    return <th key={sindex}> ผู้ติดต่อ </th>;
+                    break;
             }
         });
     });
@@ -65,7 +61,6 @@ class Dashboard extends React.Component {
   };
 
   renderTableData() {
-    console.log('Data');
     return this.state.devices.map((device, index) => {
       const { length, deviceId, barcode, name, status } = device ; //destructuring
       return (
@@ -74,7 +69,7 @@ class Dashboard extends React.Component {
             <font color={status ? "grey" : "white"}>{deviceId}</font>
           </td>
           <td>
-            <font color={status ? "grey" : "white"}>{barcode}</font>
+            <font color={status ? "grey" : "white"}>{name}</font>
           </td>
           <td>
             <font color={status ? "grey" : "white"}>{name}</font>
