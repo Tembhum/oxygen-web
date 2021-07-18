@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useTable, useRowSelect } from 'react-table'
+import React from "react";
+import styled from "styled-components";
+import { useTable, useRowSelect } from "react-table";
 import SideBar from "../components/sidebar";
-import makeData from '../components/makeData'
-import "../css/mydiv.css"
+import makeData from "../components/makeData";
+import "../css/mydiv.css";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -32,24 +32,24 @@ const Styles = styled.div`
       }
     }
   }
-  `
+`;
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef()
-    const resolvedRef = ref || defaultRef
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
 
     React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate
-    }, [resolvedRef, indeterminate])
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
 
     return (
       <>
         <input type="checkbox" ref={resolvedRef} {...rest} />
       </>
-    )
+    );
   }
-)
+);
 
 function Table({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
@@ -67,11 +67,11 @@ function Table({ columns, data }) {
       data,
     },
     useRowSelect,
-    hooks => {
-      hooks.visibleColumns.push(columns => [
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
         // Let's make a column for selection
         {
-          id: 'selection',
+          id: "selection",
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -88,9 +88,9 @@ function Table({ columns, data }) {
           ),
         },
         ...columns,
-      ])
+      ]);
     }
-  )
+  );
 
   // Render the UI for your table
   return (
@@ -144,50 +144,50 @@ function App() {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'Name',
+        Header: "Name",
         columns: [
           {
-            Header: 'First Name',
-            accessor: 'firstName',
+            Header: "First Name",
+            accessor: "firstName",
           },
           {
-            Header: 'Last Name',
-            accessor: 'lastName',
+            Header: "Last Name",
+            accessor: "lastName",
           },
         ],
       },
       {
-        Header: 'Info',
+        Header: "Info",
         columns: [
           {
-            Header: 'Age',
-            accessor: 'age',
+            Header: "Age",
+            accessor: "age",
           },
           {
-            Header: 'Visits',
-            accessor: 'visits',
+            Header: "Visits",
+            accessor: "visits",
           },
           {
-            Header: 'Status',
-            accessor: 'status',
+            Header: "Status",
+            accessor: "status",
           },
           {
-            Header: 'Profile Progress',
-            accessor: 'progress',
+            Header: "Profile Progress",
+            accessor: "progress",
           },
         ],
       },
     ],
     []
-  )
+  );
 
-  const data = React.useMemo(() => makeData(10, 3), [])
+  const data = React.useMemo(() => makeData(10, 3), []);
 
   return (
     <Styles>
       <Table columns={columns} data={data} />
     </Styles>
-  )
+  );
 }
 
-export default App
+export default App;

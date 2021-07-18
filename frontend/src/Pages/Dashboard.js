@@ -17,29 +17,45 @@ class Dashboard extends React.Component {
     openModal: false,
     barcode: null,
     deviceId: null,
-    info: {}
+    info: {},
   };
 
   componentDidMount() {
-    axios.get("http://localhost:8080/devices").then((dres) => {
-      const devices = dres.data.content;
-      axios.get("http://localhost:8080/users").then((ures) => {
-        const users = ures.data.content;
-        this.setState({ devices, users });
+    axios
+      .get(
+        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices"
+      )
+      .then((dres) => {
+        const devices = dres.data.content;
+        axios
+          .get(
+            "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/users"
+          )
+          .then((ures) => {
+            const users = ures.data.content;
+            this.setState({ devices, users });
+          });
       });
-    });
-    let temp = JSON.parse(sessionStorage.getItem("info"))
-    this.setState({info: temp})
+    let temp = JSON.parse(sessionStorage.getItem("info"));
+    this.setState({ info: temp });
   }
 
   componentDidUpdate() {
-    axios.get("http://localhost:8080/devices").then((dres) => {
-      const devices = dres.data.content;
-      axios.get("http://localhost:8080/users").then((ures) => {
-        const users = ures.data.content;
-        this.setState({ devices, users });
+    axios
+      .get(
+        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices"
+      )
+      .then((dres) => {
+        const devices = dres.data.content;
+        axios
+          .get(
+            "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/users"
+          )
+          .then((ures) => {
+            const users = ures.data.content;
+            this.setState({ devices, users });
+          });
       });
-    });
   }
 
   renderTableHeader() {
@@ -85,40 +101,45 @@ class Dashboard extends React.Component {
     this.setState({ openModal: !this.state.openModal });
   }
 
-  handleModalClose(){
-    sessionStorage.setItem('barcode', '');
-    sessionStorage.setItem('deviceId', '');
+  handleModalClose() {
+    sessionStorage.setItem("barcode", "");
+    sessionStorage.setItem("deviceId", "");
     this.handleModalShowHide();
   }
 
   handleReturnDevice(rbarcode, rdeviceId) {
     this.handleModalShowHide();
-    sessionStorage.setItem('barcode', rbarcode);
-    sessionStorage.setItem('deviceId', rdeviceId);
+    sessionStorage.setItem("barcode", rbarcode);
+    sessionStorage.setItem("deviceId", rdeviceId);
   }
 
   returnDevice(barcode, deviceId) {
-    let phonenum = JSON.parse(sessionStorage.getItem('info')).phone;
+    let phonenum = JSON.parse(sessionStorage.getItem("info")).phone;
     if (barcode && deviceId) {
-        let rheader = {
-         headers: {
-             'content-type': 'application/json'
-         }
-        };
-        let rdata = {
-            status: "4",
-            name: phonenum,
-            id: deviceId,
-            barcode: barcode,
-            user: {
-                id: JSON.parse(sessionStorage.getItem('info')).id,
-                phone: phonenum
-            },
-        };
-        axios.put("http://localhost:8080/device/" + deviceId , rdata, rheader);
+      let rheader = {
+        headers: {
+          "content-type": "application/json",
+        },
+      };
+      let rdata = {
+        status: "4",
+        name: phonenum,
+        id: deviceId,
+        barcode: barcode,
+        user: {
+          id: JSON.parse(sessionStorage.getItem("info")).id,
+          phone: phonenum,
+        },
+      };
+      axios.put(
+        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device/" +
+          deviceId,
+        rdata,
+        rheader
+      );
     }
-    sessionStorage.setItem('barcode', '');
-    sessionStorage.setItem('deviceId', '');
+    sessionStorage.setItem("barcode", "");
+    sessionStorage.setItem("deviceId", "");
     this.handleModalShowHide();
   }
 
@@ -177,22 +198,31 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-          <Modal show={this.state.openModal}>
-              <Modal.Header closeButton onClick={() => this.handleModalClose()}>
-              <Modal.Title>ยืนยันการคืนอุปกรณ์</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                  ยืนยันการคืนอุปกรณ์หมายเลขเครื่อง {sessionStorage.getItem('barcode')}
-              </Modal.Body>
-              <Modal.Footer>
-              <Button variant="secondary" onClick={() => this.handleModalClose()}>
-                  Cancel
-              </Button>
-              <Button variant="primary" onClick={() => this.returnDevice(sessionStorage.getItem('barcode'), sessionStorage.getItem('deviceId'))}>
-                  Confirm
-              </Button>
-              </Modal.Footer>
-          </Modal>
+        <Modal show={this.state.openModal}>
+          <Modal.Header closeButton onClick={() => this.handleModalClose()}>
+            <Modal.Title>ยืนยันการคืนอุปกรณ์</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            ยืนยันการคืนอุปกรณ์หมายเลขเครื่อง{" "}
+            {sessionStorage.getItem("barcode")}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => this.handleModalClose()}>
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() =>
+                this.returnDevice(
+                  sessionStorage.getItem("barcode"),
+                  sessionStorage.getItem("deviceId")
+                )
+              }
+            >
+              Confirm
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <div className="container">
           <div className="row">
             <div className="col-sm">

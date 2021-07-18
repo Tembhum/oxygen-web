@@ -71,7 +71,7 @@ class Give extends React.Component {
         status: 2,
         name: null,
         barcode: props.match.params.barcode,
-        userId: {}
+        userId: {},
       },
     };
   }
@@ -97,13 +97,16 @@ class Give extends React.Component {
     });
 
     axios
-      .post("http://localhost:8080/user", this.state.dataUser, {
-        headers: {
-          "content-type": "application/json",
-        },
-      })
+      .post(
+        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user",
+        this.state.dataUser,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      )
       .then((res) => {
-        
         this.setState({
           dataUpdate: {
             // deviceId: this.props.match.params.id,
@@ -115,20 +118,23 @@ class Give extends React.Component {
             },
           },
         });
-        
 
         axios
-          .put("http://localhost:8080/device/" + this.state.id, this.state.dataUpdate, {
-            headers: {
-              "content-type": "application/json",
-            },
-          }).then((res) => {
+          .put(
+            "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device/" +
+              this.state.id,
+            this.state.dataUpdate,
+            {
+              headers: {
+                "content-type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
             this.setState({
-              redirect: true
-            })
-          })
-          
-
+              redirect: true,
+            });
+          });
       });
   };
 
@@ -180,7 +186,7 @@ class Give extends React.Component {
           <Form.Item name={["user", "phone"]} label="เบอร์โทร">
             <Input />
           </Form.Item>
-          <Form.Item name={["user","address"]} label="ที่อยู่">
+          <Form.Item name={["user", "address"]} label="ที่อยู่">
             <Input.TextArea />
             {/* <button>map</button> */}
           </Form.Item>

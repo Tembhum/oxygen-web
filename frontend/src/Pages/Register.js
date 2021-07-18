@@ -56,7 +56,8 @@ class Register extends React.Component {
     try {
       console.log("try");
       let res = await axios.get(
-        "http://localhost:8080/user/username/" + values.user.username
+        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/username/" +
+          values.user.username
       );
       console.log(res);
       this.setState({ hideAlert: false });
@@ -86,13 +87,15 @@ class Register extends React.Component {
       },
     });
     console.log(this.state.data);
-    axios.post("http://localhost:8080/user", this.state.data, {
-      headers: {
-        "content-type": "application/json",
-      },
-    }).then((res) => {
-      this.setState({ redirect: true });
-    });
+    axios
+      .post("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user", this.state.data, {
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+      .then((res) => {
+        this.setState({ redirect: true });
+      });
   };
 
   render() {
@@ -101,90 +104,90 @@ class Register extends React.Component {
     }
 
     return (
-     <div>
-      <Layout>
-        <Content>
-          <Card>
-            <h1>Register</h1>
-            <Form
-              {...layout}
-              name="nest-messages"
-              onFinish={this.onFinish}
-              validateMessages={validateMessages}
-            >
-              <Form.Item
-                name={["user", "name"]}
-                label="ชื่อ"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
+      <div>
+        <Layout>
+          <Content>
+            <Card>
+              <h1>Register</h1>
+              <Form
+                {...layout}
+                name="nest-messages"
+                onFinish={this.onFinish}
+                validateMessages={validateMessages}
               >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name={["user", "username"]}
-                label="Username"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name={["user", "age"]}
-                label="อายุ"
-                rules={[
-                  {
-                    type: "number",
-                    min: 0,
-                    max: 99,
-                  },
-                ]}
-              >
-                <InputNumber />
-              </Form.Item>
-              <Form.Item name={["user", "phone"]} label="เบอร์โทร">
-                <Input />
-              </Form.Item>
-              <Form.Item name={["user", "address"]} label="ที่อยู่">
-                <Input.TextArea />
-              </Form.Item>
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your password!",
-                  },
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-              <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                <Button type="primary" htmlType="submit">
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
-            <Alert
-              className={this.state.hideAlert ? "hidden" : null}
-              message="Username ซ้ำ"
-              type="error"
-            />
-            <Alert
-              className={this.state.shouldHide ? "hidden" : null}
-              message="เพิ่มผู้ใช้ใหม่แล้ว"
-              type="success"
-            />
-          </Card>
-        </Content>
-      </Layout>
-     </div>
+                <Form.Item
+                  name={["user", "name"]}
+                  label="ชื่อ"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["user", "username"]}
+                  label="Username"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["user", "age"]}
+                  label="อายุ"
+                  rules={[
+                    {
+                      type: "number",
+                      min: 0,
+                      max: 99,
+                    },
+                  ]}
+                >
+                  <InputNumber />
+                </Form.Item>
+                <Form.Item name={["user", "phone"]} label="เบอร์โทร">
+                  <Input />
+                </Form.Item>
+                <Form.Item name={["user", "address"]} label="ที่อยู่">
+                  <Input.TextArea />
+                </Form.Item>
+                <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password!",
+                    },
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
+                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                  <Button type="primary" htmlType="submit">
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
+              <Alert
+                className={this.state.hideAlert ? "hidden" : null}
+                message="Username ซ้ำ"
+                type="error"
+              />
+              <Alert
+                className={this.state.shouldHide ? "hidden" : null}
+                message="เพิ่มผู้ใช้ใหม่แล้ว"
+                type="success"
+              />
+            </Card>
+          </Content>
+        </Layout>
+      </div>
     );
   }
 }
