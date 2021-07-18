@@ -97,7 +97,7 @@ class Give extends React.Component {
     });
 
     axios
-      .post("http://localhost:8080/user", this.state.dataUser, {
+      .post("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user", this.state.dataUser, {
         headers: {
           "content-type": "application/json",
         },
@@ -118,7 +118,7 @@ class Give extends React.Component {
         
 
         axios
-          .put("http://localhost:8080/device/" + this.state.id, this.state.dataUpdate, {
+          .put("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device/" + this.state.id, this.state.dataUpdate, {
             headers: {
               "content-type": "application/json",
             },

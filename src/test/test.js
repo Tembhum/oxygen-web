@@ -1,15 +1,15 @@
 const axios = require("axios").default;
 
-// const data = {
-//   firstName: "first",
-//   lastName: "last",
-//   userName: "test",
-//   age: 12,
-//   phone: "0801234567",
-//   location: "testing centre",
-//   passwd: "password",
-//   type: 1,
-// };
+const data = {
+  firstName: "admin",
+  lastName: "admin",
+  userName: "admin",
+  age: 1,
+  phone: "0800000000",
+  location: "testing centre",
+  passwd: "password",
+  type: 1,
+};
 
 // const dataDevice = {
 //   barcode: "cccccc",
@@ -29,11 +29,17 @@ const axios = require("axios").default;
 //   },
 // };
 
-// axios.post("http://localhost:8080/user", data, {
-//   headers: {
-//     "content-type": "application/json",
-//   },
-// }).then(console.log);
+// axios
+//   .post(
+//     "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user",
+//     data,
+//     {
+//       headers: {
+//         "content-type": "application/json",
+//       },
+//     }
+//   )
+//   .then(console.log);
 
 // axios
 //   .post("http://localhost:8080/device", dataDevice, {
@@ -52,7 +58,9 @@ const axios = require("axios").default;
 //   .then(console.log);
 
 try{
- axios.get("http://localhost:8080/user/username/new");
+ axios.get(
+   "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/username/admin"
+ ).then(console.log);
 } catch {
   console.log("catch");
 }

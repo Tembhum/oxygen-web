@@ -29,7 +29,7 @@ class Login extends React.Component {
     sessionStorage.setItem("login", "true");
     try {
       axios
-        .get("http://localhost:8080/user/username/" + values.username)
+        .get("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/username/" + values.username)
         .then((res) => {
           if (values.password == res.data.passwd) {
             delete res.data["passwd"];

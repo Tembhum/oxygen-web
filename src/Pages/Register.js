@@ -56,7 +56,7 @@ class Register extends React.Component {
     try {
       console.log("try");
       let res = await axios.get(
-        "http://localhost:8080/user/username/" + values.user.username
+        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/username/" + values.user.username
       );
       console.log(res);
       this.setState({ hideAlert: false });
@@ -86,7 +86,7 @@ class Register extends React.Component {
       },
     });
     console.log(this.state.data);
-    axios.post("http://localhost:8080/user", this.state.data, {
+    axios.post("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user", this.state.data, {
       headers: {
         "content-type": "application/json",
       },

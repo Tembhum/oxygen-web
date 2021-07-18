@@ -21,9 +21,9 @@ class Dashboard extends React.Component {
   };
 
   componentDidMount() {
-    axios.get("http://localhost:8080/devices").then((dres) => {
+    axios.get("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices").then((dres) => {
       const devices = dres.data.content;
-      axios.get("http://localhost:8080/users").then((ures) => {
+      axios.get("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/users").then((ures) => {
         const users = ures.data.content;
         this.setState({ devices, users });
       });
@@ -33,9 +33,9 @@ class Dashboard extends React.Component {
   }
 
   componentDidUpdate() {
-    axios.get("http://localhost:8080/devices").then((dres) => {
+    axios.get("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices").then((dres) => {
       const devices = dres.data.content;
-      axios.get("http://localhost:8080/users").then((ures) => {
+      axios.get("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/users").then((ures) => {
         const users = ures.data.content;
         this.setState({ devices, users });
       });
@@ -115,7 +115,7 @@ class Dashboard extends React.Component {
                 phone: phonenum
             },
         };
-        axios.put("http://localhost:8080/device/" + deviceId , rdata, rheader);
+        axios.put("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device/" + deviceId , rdata, rheader);
     }
     sessionStorage.setItem('barcode', '');
     sessionStorage.setItem('deviceId', '');

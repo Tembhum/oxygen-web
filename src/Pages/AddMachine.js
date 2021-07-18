@@ -49,7 +49,9 @@ class AddMachine extends React.Component {
   onFinish = async (values) => {
     this.setState({ shouldHide: true, barcodeSame: false });
     await axios
-      .get("http://localhost:8080/devices")
+      .get(
+        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices"
+      )
       .then((res) => {
         for (let i = 0; i < res.data.content.length; i++) {
           if (values.barcode == res.data.content[i].barcode) {
@@ -71,11 +73,15 @@ class AddMachine extends React.Component {
           });
 
           axios
-            .post("http://localhost:8080/device", this.state.data, {
-              headers: {
-                "content-type": "application/json",
-              },
-            })
+            .post(
+              "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device",
+              this.state.data,
+              {
+                headers: {
+                  "content-type": "application/json",
+                },
+              }
+            )
             .then((res) => {
               this.setState({
                 data2: {
@@ -88,7 +94,8 @@ class AddMachine extends React.Component {
                 },
               });
               axios.put(
-                "http://localhost:8080/device/" + res.data.id,
+                "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device/" +
+                  res.data.id,
                 this.state.data2,
                 {
                   headers: {

@@ -56,12 +56,12 @@ class Admin2 extends React.Component {
       data3: "x",
       user3: [],
     };
-    axios.get("http://localhost:8080/user/type/1").then((ures) => {
+    axios.get("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/type/1").then((ures) => {
       const usersAdmin = ures.data.content;
       this.setState({
         usersAdmin: ures.data.content,
       });
-      axios.get("http://localhost:8080/user/type/2").then((ures) => {
+      axios.get("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/type/2").then((ures) => {
         const usersRescuer = ures.data.content;
         this.setState({
           usersRescuer: ures.data.content,
@@ -84,7 +84,7 @@ class Admin2 extends React.Component {
     /////////////////////////////////////////////// name is userId
     let id = this.state.data.name;
     console.log("here" + id);
-    let url2 = "http://localhost:8080/user/" + this.state.data.name;
+    let url2 = "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/" + this.state.data.name;
     axios.get(url2).then((ures) => {
       var data2 = {
         address: ures.data.address,
@@ -112,7 +112,7 @@ class Admin2 extends React.Component {
       console.log(this.state.data3);
 
       // Send a put request
-      let url = "http://localhost:8080/user/" + this.state.data.name;
+      let url = "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/" + this.state.data.name;
       axios
         .put(url, data2, {
           headers: {
