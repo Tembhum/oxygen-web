@@ -23,19 +23,19 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8080/devices", {
+      .get(process.env.REACT_APP_OXYGEN_APP_URL + "/devices", {
         auth: {
-          username: "admin",
-          password: "password",
+          username: process.env.REACT_APP_TOKEN_USERNAME,
+          password: process.env.REACT_APP_TOKEN_PASSWORD,
         },
       })
       .then((dres) => {
         const devices = dres.data.content;
         axios
-          .get("http://localhost:8080/users", {
+          .get(process.env.REACT_APP_OXYGEN_APP_URL + "/users", {
             auth: {
-              username: "admin",
-              password: "password",
+              username: process.env.REACT_APP_TOKEN_USERNAME,
+              password: process.env.REACT_APP_TOKEN_PASSWORD,
             },
           })
           .then((ures) => {
@@ -49,19 +49,19 @@ class Dashboard extends React.Component {
 
   componentDidUpdate() {
     axios
-      .get("http://localhost:8080/devices", {
+      .get(process.env.REACT_APP_OXYGEN_APP_URL + "/devices", {
         auth: {
-          username: "admin",
-          password: "password",
+          username: process.env.REACT_APP_TOKEN_USERNAME,
+          password: process.env.REACT_APP_TOKEN_PASSWORD,
         },
       })
       .then((dres) => {
         const devices = dres.data.content;
         axios
-          .get("http://localhost:8080/users", {
+          .get(process.env.REACT_APP_OXYGEN_APP_URL + "/users", {
             auth: {
-              username: "admin",
-              password: "password",
+              username: process.env.REACT_APP_TOKEN_USERNAME,
+              password: process.env.REACT_APP_TOKEN_PASSWORD,
             },
           })
           .then((ures) => {
@@ -223,7 +223,6 @@ class Dashboard extends React.Component {
       );
     } else if (this.state.showMoreInfo) {
       let moreinfo = sessionStorage.getItem("moreinfo");
-      console.log(moreinfo);
       return <Redirect to={`/info/${moreinfo}`} />;
     } else if (sessionStorage.getItem("login") !== "true") {
       return <Redirect push to="/login" />;
