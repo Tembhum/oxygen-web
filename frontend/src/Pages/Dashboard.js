@@ -76,6 +76,7 @@ class Dashboard extends React.Component {
         }
       });
     });
+    console.log(header[0]);
     return header[0]; // will be fix
   }
 
@@ -86,6 +87,14 @@ class Dashboard extends React.Component {
       deviceId: id,
     });
   };
+
+  moreInfoHandler = async (deviceId) => {
+    let requestmoreinfo = {
+        destination: "info",
+        id: deviceId,
+    };
+    await sessionStorage.setItem("moreinfo", requestmoreinfo);
+  }
 
   countKey(obj, key, val) {
     let count = 0;
@@ -148,9 +157,6 @@ class Dashboard extends React.Component {
       const { length, id, barcode, name, status } = device; //destructuring
       return (
         <tr key={id} bgcolor={status == 2 ? "grey" : "white"}>
-          {/* <td>
-            <font color={status == 4 ? "grey" : "white"}>{id}</font>
-          </td> */}
           <td>
             <font color={status == 4 ? "grey" : "white"}>{name}</font>
           </td>
@@ -180,21 +186,39 @@ class Dashboard extends React.Component {
               Give
             </Button>
           </td>
+          <td>
+            <Button
+              variant={status == 2 ? "outline-light" : "outline-info"}
+              size="sm"
+              onClick={() => {
+                this.moreInfoHandler(id);
+              }}
+            >
+              ...
+            </Button>
+          </td>
         </tr>
       );
     });
   }
 
   render() {
+//    let moreinfo = sessionStorage.getItem("moreinfo").destination;
     if (this.state.destination == "give") {
       return (
         <Redirect
           to={`/give/${this.state.chosenSerial}/${this.state.deviceId}`}
         />
       );
+//    } else if ( moreinfo.destination == "info") {
+//      return (
+//        <Redirect
+//          to={`/info/${moreinfo.id}`}
+//        />
+//      );
     } else if (sessionStorage.getItem("login") !== "true") {
       return <Redirect push to="/login" />;
-    }
+    };
 
     return (
       <div>
