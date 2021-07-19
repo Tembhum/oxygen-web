@@ -59,25 +59,21 @@ class Dashboard extends React.Component {
   }
 
   renderTableHeader() {
-    let key = this.state.devices;
-    let header = key.map((device, index) => {
-      let keyArray = Object.keys(device);
-      return keyArray.map((header, sindex) => {
-        switch (header) {
-          // case "id":
-          //   return <th key={sindex}> # </th>;
-          //   break;
-          case "barcode":
-            return <th key={sindex}> หมายเลขเครื่อง </th>;
-            break;
-          case "name":
-            return <th key={sindex}> ผู้ติดต่อ </th>;
-            break;
-        }
-      });
+    let index = [ "name","barcode","casenum"]
+    let header = index.map((key) => {
+        switch (key){
+            case "name":
+                return <th key="name"> ผู้ติดต่อ </th>;
+                break;
+            case "barcode":
+                return <th key="barcode"> หมายเลขเครื่อง </th>;
+                break;
+            case "casenum":
+                return <th key="casenum"> หมายเลขเคส </th>;
+                break;
+        };
     });
-    console.log(header[0]);
-    return header[0]; // will be fix
+    return header; // will be fix
   }
 
   giveHandler = async (number, id) => {

@@ -20,18 +20,14 @@ export default function Navbar() {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
-  console.log(sessionStorage.getItem("info"));
   if (sessionStorage.getItem("info") == null ) {
     return <Redirect push to="/login" />;
   }
   let role = JSON.parse(sessionStorage.getItem("info")).type;
-  console.log(role);
   if (role == "1") {
     var SidebarData = SidebarData1;
-    console.log("this is admin");
   } else if (role == "2") {
     var SidebarData = SidebarData2;
-    console.log("this is rescuer");
   }
 
   return (
