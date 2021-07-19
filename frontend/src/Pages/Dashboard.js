@@ -23,15 +23,21 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     axios
-      .get(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices"
-      )
+      .get("http://localhost:8080/devices", {
+        auth: {
+          username: "admin",
+          password: "password",
+        },
+      })
       .then((dres) => {
         const devices = dres.data.content;
         axios
-          .get(
-            "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/users"
-          )
+          .get("http://localhost:8080/users", {
+            auth: {
+              username: "admin",
+              password: "password",
+            },
+          })
           .then((ures) => {
             const users = ures.data.content;
             this.setState({ devices, users });
@@ -43,15 +49,21 @@ class Dashboard extends React.Component {
 
   componentDidUpdate() {
     axios
-      .get(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices"
-      )
+      .get("http://localhost:8080/devices", {
+        auth: {
+          username: "admin",
+          password: "password",
+        },
+      })
       .then((dres) => {
         const devices = dres.data.content;
         axios
-          .get(
-            "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/users"
-          )
+          .get("http://localhost:8080/users", {
+            auth: {
+              username: "admin",
+              password: "password",
+            },
+          })
           .then((ures) => {
             const users = ures.data.content;
             this.setState({ devices, users });
@@ -60,19 +72,19 @@ class Dashboard extends React.Component {
   }
 
   renderTableHeader() {
-    let index = [ "name","barcode","casenum"]
+    let index = ["name", "barcode", "casenum"];
     let header = index.map((key) => {
-        switch (key){
-            case "name":
-                return <th key="name"> ผู้ติดต่อ </th>;
-                break;
-            case "barcode":
-                return <th key="barcode"> หมายเลขเครื่อง </th>;
-                break;
-            case "casenum":
-                return <th key="casenum"> หมายเลขเคส </th>;
-                break;
-        };
+      switch (key) {
+        case "name":
+          return <th key="name"> ผู้ติดต่อ </th>;
+          break;
+        case "barcode":
+          return <th key="barcode"> หมายเลขเครื่อง </th>;
+          break;
+        case "casenum":
+          return <th key="casenum"> หมายเลขเคส </th>;
+          break;
+      }
     });
     return header;
   }
@@ -86,9 +98,9 @@ class Dashboard extends React.Component {
   };
 
   moreInfoHandler = async (deviceId) => {
-    this.setState({showMoreInfo: !this.showMoreInfo});
+    this.setState({ showMoreInfo: !this.showMoreInfo });
     await sessionStorage.setItem("moreinfo", deviceId);
-  }
+  };
 
   countKey(obj, key, val) {
     let count = 0;
@@ -120,8 +132,10 @@ class Dashboard extends React.Component {
     let phonenum = JSON.parse(sessionStorage.getItem("info")).phone;
     if (barcode && deviceId) {
       let rheader = {
-        headers: {
-          "content-type": "application/json",
+        "content-type": "application/json",
+        auth: {
+          username: "admin",
+          password: "password",
         },
       };
       let rdata = {
@@ -134,12 +148,7 @@ class Dashboard extends React.Component {
           phone: phonenum,
         },
       };
-      axios.put(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device/" +
-          deviceId,
-        rdata,
-        rheader
-      );
+      axios.put("http://localhost:8080/device/" + deviceId, rdata, rheader);
     }
     sessionStorage.setItem("barcode", "");
     sessionStorage.setItem("deviceId", "");
@@ -149,8 +158,8 @@ class Dashboard extends React.Component {
   renderTableData() {
     return this.state.devices.map((device, index) => {
       const { length, id, barcode, name, status, user } = device; //destructuring
-//      console.log(JSON.parse(user));
-//      let casenum = JSON.parse(name).casenum;
+      //      console.log(JSON.parse(user));
+      //      let casenum = JSON.parse(name).casenum;
       return (
         <tr key={id} bgcolor={status == 2 ? "grey" : "white"}>
           <td>
@@ -208,17 +217,13 @@ class Dashboard extends React.Component {
           to={`/give/${this.state.chosenSerial}/${this.state.deviceId}`}
         />
       );
-    } else if ( this.state.showMoreInfo ) {
+    } else if (this.state.showMoreInfo) {
       let moreinfo = sessionStorage.getItem("moreinfo");
       console.log(moreinfo);
-      return (
-        <Redirect
-          to={`/info/${moreinfo}`}
-        />
-      );
+      return <Redirect to={`/info/${moreinfo}`} />;
     } else if (sessionStorage.getItem("login") !== "true") {
       return <Redirect push to="/login" />;
-    };
+    }
 
     return (
       <div>

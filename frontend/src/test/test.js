@@ -1,4 +1,7 @@
 const axios = require("axios").default;
+const env = require("dotenv");
+
+//  const env = dotenv.config().parsed;
 
 const data = {
   firstName: "first",
@@ -29,17 +32,17 @@ const data = {
 //   },
 // };
 
-axios
-  .post("http://localhost:8080/user", data, {
-    headers: {
-      "content-type": "application/json",
-      Authorization: {
-        username: "test",
-        password: "password",
-      },
-    },
-  })
-  .then(console.log);
+// axios
+//   .post("http://localhost:8080/user", data, {
+//     headers: {
+//       "content-type": "application/json",
+//       Authorization: {
+//         username: "test",
+//         password: "password",
+//       },
+//     },
+//   })
+//   .then(console.log);
 
 // axios
 //   .post("http://localhost:8080/device", dataDevice, {
@@ -80,3 +83,5 @@ axios
 //     "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/8"
 //   )
 //   .then(console.log);
+
+console.log(process.env.LOCAL_URL)
