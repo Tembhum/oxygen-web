@@ -103,11 +103,11 @@ class Give extends React.Component {
     });
 
     axios
-      .post("http://localhost:8080/user", this.state.dataUser, {
+      .post(process.env.REACT_APP_OXYGEN_APP_URL + "/user", this.state.dataUser, {
         "content-type": "application/json",
         auth: {
-          username: "admin",
-          password: "password",
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
         },
       })
       .then((res) => {
@@ -125,13 +125,13 @@ class Give extends React.Component {
 
         axios
           .put(
-            "http://localhost:8080/device/" + this.state.id,
+            process.env.REACT_APP_OXYGEN_APP_URL + "/device/" + this.state.id,
             this.state.dataUpdate,
             {
               "content-type": "application/json",
               auth: {
-                username: "admin",
-                password: "password",
+                username: process.env.REACT_APP_TOKEN_USERNAME ,
+                password: process.env.REACT_APP_TOKEN_PASSWORD ,
               },
             }
           )

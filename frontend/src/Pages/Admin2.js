@@ -57,10 +57,10 @@ class Admin2 extends React.Component {
       user3: [],
     };
     axios
-      .get("http://localhost:8080/user/type/1", {
+      .get(process.env.REACT_APP_OXYGEN_APP_URL + "/user/type/1", {
         auth: {
-          username: "admin",
-          password: "password",
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
         },
       })
       .then((ures) => {
@@ -69,10 +69,10 @@ class Admin2 extends React.Component {
           usersAdmin: ures.data.content,
         });
         axios
-          .get("http://localhost:8080/user/type/2", {
+          .get(process.env.REACT_APP_OXYGEN_APP_URL + "/user/type/2", {
             auth: {
-              username: "admin",
-              password: "password",
+              username: process.env.REACT_APP_TOKEN_USERNAME ,
+              password: process.env.REACT_APP_TOKEN_PASSWORD ,
             },
           })
           .then((ures) => {
@@ -98,12 +98,12 @@ class Admin2 extends React.Component {
     /////////////////////////////////////////////// name is userId
     let id = this.state.data.name;
     console.log("here" + id);
-    let url2 = "http://localhost:8080/user/" + this.state.data.name;
+    let url2 = process.env.REACT_APP_OXYGEN_APP_URL + "/user/" + this.state.data.name;
     axios
       .get(url2, {
         auth: {
-          username: "admin",
-          password: "password",
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
         },
       })
       .then((ures) => {
@@ -133,13 +133,13 @@ class Admin2 extends React.Component {
         console.log(this.state.data3);
 
         // Send a put request
-        let url = "http://localhost:8080/user/" + this.state.data.name;
+        let url = process.env.REACT_APP_OXYGEN_APP_URL + "/user/" + this.state.data.name;
         axios
           .put(url, data2, {
               "content-type": "application/json",
               auth: {
-                username: "admin",
-                password: "password",
+                username: process.env.REACT_APP_TOKEN_USERNAME ,
+                password: process.env.REACT_APP_TOKEN_PASSWORD ,
               }
             },
           )

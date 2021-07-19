@@ -49,10 +49,10 @@ class AddMachine extends React.Component {
   onFinish = async (values) => {
     this.setState({ shouldHide: true, barcodeSame: false });
     await axios
-      .get("http://localhost:8080/devices", {
+      .get(process.env.REACT_APP_OXYGEN_APP_URL + "/devices", {
         auth: {
-          username: "admin",
-          password: "password",
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
         },
       })
       .then((res) => {
@@ -76,11 +76,11 @@ class AddMachine extends React.Component {
           });
 
           axios
-            .post("http://localhost:8080/device", this.state.data, {
+            .post(process.env.REACT_APP_OXYGEN_APP_URL + "/device", this.state.data, {
               "content-type": "application/json",
               auth: {
-                username: "admin",
-                password: "password",
+                username: process.env.REACT_APP_TOKEN_USERNAME ,
+                password: process.env.REACT_APP_TOKEN_PASSWORD ,
               },
             })
             .then((res) => {
@@ -95,13 +95,13 @@ class AddMachine extends React.Component {
                 },
               });
               axios.put(
-                "http://localhost:8080/device/" + res.data.id,
+                process.env.REACT_APP_OXYGEN_APP_URL + "/device/" + res.data.id,
                 this.state.data2,
                 {
                   "content-type": "application/json",
                   auth: {
-                    username: "admin",
-                    password: "password",
+                    username: process.env.REACT_APP_TOKEN_USERNAME ,
+                    password: process.env.REACT_APP_TOKEN_PASSWORD,
                   },
                 }
               );
