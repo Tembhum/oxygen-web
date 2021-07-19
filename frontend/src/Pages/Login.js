@@ -29,10 +29,10 @@ class Login extends React.Component {
     sessionStorage.setItem("login", "true");
     try {
       axios
-        .get("http://localhost:8080/user/username/" + values.username, {
+        .get(process.env.REACT_APP_OXYGEN_APP_URL + "/user/username/" + values.username, {
         auth: {
-          username: "admin",
-          password: "password",
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
         },
       })
         .then((res) => {

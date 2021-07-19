@@ -148,7 +148,7 @@ class Dashboard extends React.Component {
           phone: phonenum,
         },
       };
-      axios.put("http://localhost:8080/device/" + deviceId, rdata, rheader);
+      axios.put(process.env.REACT_APP_OXYGEN_APP_URL + "/device/" + deviceId, rdata, rheader);
     }
     sessionStorage.setItem("barcode", "");
     sessionStorage.setItem("deviceId", "");

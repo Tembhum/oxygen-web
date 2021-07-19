@@ -56,11 +56,11 @@ class Register extends React.Component {
     try {
       console.log("try");
       let res = await axios.get(
-        "http://localhost:8080/user/username/" + values.user.username,
+        process.env.REACT_APP_OXYGEN_APP_URL + "/user/username/" + values.user.username,
         {
           auth: {
-            username: "admin",
-            password: "password",
+            username: process.env.REACT_APP_TOKEN_USERNAME ,
+            password: process.env.REACT_APP_TOKEN_PASSWORD ,
           },
         }
       );
@@ -93,11 +93,11 @@ class Register extends React.Component {
     });
     console.log(this.state.data);
     axios
-      .post("http://localhost:8080/user", this.state.data, {
+      .post(process.env.REACT_APP_OXYGEN_APP_URL + "/user", this.state.data, {
         "content-type": "application/json",
         auth: {
-          username: "admin",
-          password: "password",
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
         },
       })
       .then((res) => {
