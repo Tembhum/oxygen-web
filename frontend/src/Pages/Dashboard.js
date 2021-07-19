@@ -17,6 +17,7 @@ class Dashboard extends React.Component {
     openModal: false,
     barcode: null,
     deviceId: null,
+    showMoreInfo: false,
     info: {},
   };
 
@@ -59,24 +60,21 @@ class Dashboard extends React.Component {
   }
 
   renderTableHeader() {
-    let key = this.state.devices;
-    let header = key.map((device, index) => {
-      let keyArray = Object.keys(device);
-      return keyArray.map((header, sindex) => {
-        switch (header) {
-          // case "id":
-          //   return <th key={sindex}> # </th>;
-          //   break;
-          case "barcode":
-            return <th key={sindex}> หมายเลขเครื่อง </th>;
-            break;
-          case "name":
-            return <th key={sindex}> ผู้ติดต่อ </th>;
-            break;
-        }
-      });
+    let index = [ "name","barcode","casenum"]
+    let header = index.map((key) => {
+        switch (key){
+            case "name":
+                return <th key="name"> ผู้ติดต่อ </th>;
+                break;
+            case "barcode":
+                return <th key="barcode"> หมายเลขเครื่อง </th>;
+                break;
+            case "casenum":
+                return <th key="casenum"> หมายเลขเคส </th>;
+                break;
+        };
     });
-    return header[0]; // will be fix
+    return header;
   }
 
   giveHandler = async (number, id) => {
@@ -86,6 +84,11 @@ class Dashboard extends React.Component {
       deviceId: id,
     });
   };
+
+  moreInfoHandler = async (deviceId) => {
+    this.setState({showMoreInfo: !this.showMoreInfo});
+    await sessionStorage.setItem("moreinfo", deviceId);
+  }
 
   countKey(obj, key, val) {
     let count = 0;
@@ -145,17 +148,19 @@ class Dashboard extends React.Component {
 
   renderTableData() {
     return this.state.devices.map((device, index) => {
-      const { length, id, barcode, name, status } = device; //destructuring
+      const { length, id, barcode, name, status, user } = device; //destructuring
+//      console.log(JSON.parse(user));
+//      let casenum = JSON.parse(name).casenum;
       return (
         <tr key={id} bgcolor={status == 2 ? "grey" : "white"}>
-          {/* <td>
-            <font color={status == 4 ? "grey" : "white"}>{id}</font>
-          </td> */}
           <td>
             <font color={status == 4 ? "grey" : "white"}>{name}</font>
           </td>
           <td>
             <font color={status == 4 ? "grey" : "white"}>{barcode}</font>
+          </td>
+          <td>
+            <font color={status == 4 ? "grey" : "white"}></font>
           </td>
           <td>
             <Button
@@ -180,6 +185,17 @@ class Dashboard extends React.Component {
               Give
             </Button>
           </td>
+          <td>
+            <Button
+              variant={status == 2 ? "outline-light" : "outline-info"}
+              size="sm"
+              onClick={() => {
+                this.moreInfoHandler(id);
+              }}
+            >
+              ...
+            </Button>
+          </td>
         </tr>
       );
     });
@@ -192,14 +208,22 @@ class Dashboard extends React.Component {
           to={`/give/${this.state.chosenSerial}/${this.state.deviceId}`}
         />
       );
+    } else if ( this.state.showMoreInfo ) {
+      let moreinfo = sessionStorage.getItem("moreinfo");
+      console.log(moreinfo);
+      return (
+        <Redirect
+          to={`/info/${moreinfo}`}
+        />
+      );
     } else if (sessionStorage.getItem("login") !== "true") {
       return <Redirect push to="/login" />;
-    }
+    };
 
     return (
       <div>
         <Modal show={this.state.openModal}>
-          <Modal.Header closeButton onClick={() => this.handleModalClose()}>
+          <Modal.Header>
             <Modal.Title>ยืนยันการคืนอุปกรณ์</Modal.Title>
           </Modal.Header>
           <Modal.Body>

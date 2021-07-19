@@ -64,6 +64,7 @@ class Give extends React.Component {
         location: "",
         severity: 0,
         type: 3,
+        caseNo: "",
       },
 
       dataUpdate: {
@@ -90,6 +91,7 @@ class Give extends React.Component {
         lastName: lastname,
         age: values.user.age,
         phone: values.user.phone,
+        caseNo: values.user.caseNo,
         location: values.user.address,
         // severity: 0,
         type: 3,
@@ -158,6 +160,12 @@ class Give extends React.Component {
         >
           <Form.Item label="วันที่ส่ง" name={"dateGive"}>
             <DatePicker />
+          </Form.Item>
+          <Form.Item
+            name={["user", "caseNo"]}
+            label="หมายเลขเคสผู้ป่วย (กรณีมี)"
+          >
+            <Input />
           </Form.Item>
           <Form.Item
             name={["user", "name"]}
