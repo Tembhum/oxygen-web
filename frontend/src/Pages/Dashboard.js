@@ -223,7 +223,7 @@ class Dashboard extends React.Component {
     return (
       <div>
         <Modal show={this.state.openModal}>
-          <Modal.Header closeButton onClick={() => this.handleModalClose()}>
+          <Modal.Header>
             <Modal.Title>ยืนยันการคืนอุปกรณ์</Modal.Title>
           </Modal.Header>
           <Modal.Body>
