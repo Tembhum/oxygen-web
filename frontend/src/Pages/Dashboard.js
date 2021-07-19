@@ -17,6 +17,7 @@ class Dashboard extends React.Component {
     openModal: false,
     barcode: null,
     deviceId: null,
+    showMoreInfo: false,
     info: {},
   };
 
@@ -73,7 +74,7 @@ class Dashboard extends React.Component {
                 break;
         };
     });
-    return header; // will be fix
+    return header;
   }
 
   giveHandler = async (number, id) => {
@@ -85,11 +86,8 @@ class Dashboard extends React.Component {
   };
 
   moreInfoHandler = async (deviceId) => {
-    let requestmoreinfo = {
-        destination: "info",
-        id: deviceId,
-    };
-    await sessionStorage.setItem("moreinfo", requestmoreinfo);
+    this.setState({showMoreInfo: !this.showMoreInfo});
+    await sessionStorage.setItem("moreinfo", deviceId);
   }
 
   countKey(obj, key, val) {
@@ -150,7 +148,9 @@ class Dashboard extends React.Component {
 
   renderTableData() {
     return this.state.devices.map((device, index) => {
-      const { length, id, barcode, name, status } = device; //destructuring
+      const { length, id, barcode, name, status, user } = device; //destructuring
+//      console.log(JSON.parse(user));
+//      let casenum = JSON.parse(name).casenum;
       return (
         <tr key={id} bgcolor={status == 2 ? "grey" : "white"}>
           <td>
@@ -158,6 +158,9 @@ class Dashboard extends React.Component {
           </td>
           <td>
             <font color={status == 4 ? "grey" : "white"}>{barcode}</font>
+          </td>
+          <td>
+            <font color={status == 4 ? "grey" : "white"}></font>
           </td>
           <td>
             <Button
@@ -199,19 +202,20 @@ class Dashboard extends React.Component {
   }
 
   render() {
-//    let moreinfo = sessionStorage.getItem("moreinfo").destination;
     if (this.state.destination == "give") {
       return (
         <Redirect
           to={`/give/${this.state.chosenSerial}/${this.state.deviceId}`}
         />
       );
-//    } else if ( moreinfo.destination == "info") {
-//      return (
-//        <Redirect
-//          to={`/info/${moreinfo.id}`}
-//        />
-//      );
+    } else if ( this.state.showMoreInfo ) {
+      let moreinfo = sessionStorage.getItem("moreinfo");
+      console.log(moreinfo);
+      return (
+        <Redirect
+          to={`/info/${moreinfo}`}
+        />
+      );
     } else if (sessionStorage.getItem("login") !== "true") {
       return <Redirect push to="/login" />;
     };
