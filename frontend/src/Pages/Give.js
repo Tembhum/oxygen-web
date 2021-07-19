@@ -65,6 +65,8 @@ class Give extends React.Component {
         severity: 0,
         type: 3,
         caseNo: "",
+        servcieRequestDate: null,
+        serviceDate: null
       },
 
       dataUpdate: {
@@ -95,6 +97,8 @@ class Give extends React.Component {
         location: values.user.address,
         // severity: 0,
         type: 3,
+        serviceRequestDate: values.dateGive._d,
+        serviceDate: values.dateReturn._d
       },
     });
 
@@ -131,7 +135,7 @@ class Give extends React.Component {
               },
             }
           )
-          .then((res) => {
+          .then(() => {
             this.setState({
               redirect: true,
             });
