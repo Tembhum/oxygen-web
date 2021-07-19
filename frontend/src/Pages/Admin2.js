@@ -116,7 +116,7 @@ class Admin2 extends React.Component {
 
       // const myObj = JSON.parse(data2);
 
-      console.log(this.state.data.type);
+      console.log(this.state.data.type)
       console.log(data2);
       console.log(this.data2);
       console.log(this.state.data3);
