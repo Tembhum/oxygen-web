@@ -32,17 +32,15 @@ const data = {
 //   },
 // };
 
-// axios
-//   .post("http://localhost:8080/user", data, {
-//     headers: {
-//       "content-type": "application/json",
-//       Authorization: {
-//         username: "test",
-//         password: "password",
-//       },
-//     },
-//   })
-//   .then(console.log);
+axios
+  .post("http://localhost:8080/user", data, {
+      "content-type": "application/json",
+      auth: {
+        username: "test",
+        password: "password",
+      },
+  })
+  .then(console.log);
 
 // axios
 //   .post("http://localhost:8080/device", dataDevice, {
