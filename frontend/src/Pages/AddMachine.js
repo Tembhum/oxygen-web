@@ -49,9 +49,12 @@ class AddMachine extends React.Component {
   onFinish = async (values) => {
     this.setState({ shouldHide: true, barcodeSame: false });
     await axios
-      .get(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices"
-      )
+      .get(process.env.REACT_APP_OXYGEN_APP_URL + "/devices", {
+        auth: {
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
+        },
+      })
       .then((res) => {
         for (let i = 0; i < res.data.content.length; i++) {
           if (values.barcode == res.data.content[i].barcode) {
@@ -73,15 +76,13 @@ class AddMachine extends React.Component {
           });
 
           axios
-            .post(
-              "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device",
-              this.state.data,
-              {
-                headers: {
-                  "content-type": "application/json",
-                },
-              }
-            )
+            .post(process.env.REACT_APP_OXYGEN_APP_URL + "/device", this.state.data, {
+              "content-type": "application/json",
+              auth: {
+                username: process.env.REACT_APP_TOKEN_USERNAME ,
+                password: process.env.REACT_APP_TOKEN_PASSWORD ,
+              },
+            })
             .then((res) => {
               this.setState({
                 data2: {
@@ -94,12 +95,13 @@ class AddMachine extends React.Component {
                 },
               });
               axios.put(
-                "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device/" +
-                  res.data.id,
+                process.env.REACT_APP_OXYGEN_APP_URL + "/device/" + res.data.id,
                 this.state.data2,
                 {
-                  headers: {
-                    "content-type": "application/json",
+                  "content-type": "application/json",
+                  auth: {
+                    username: process.env.REACT_APP_TOKEN_USERNAME ,
+                    password: process.env.REACT_APP_TOKEN_PASSWORD,
                   },
                 }
               );

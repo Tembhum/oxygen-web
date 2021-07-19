@@ -57,18 +57,24 @@ class Admin2 extends React.Component {
       user3: [],
     };
     axios
-      .get(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/type/1"
-      )
+      .get(process.env.REACT_APP_OXYGEN_APP_URL + "/user/type/1", {
+        auth: {
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
+        },
+      })
       .then((ures) => {
         const usersAdmin = ures.data.content;
         this.setState({
           usersAdmin: ures.data.content,
         });
         axios
-          .get(
-            "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/type/2"
-          )
+          .get(process.env.REACT_APP_OXYGEN_APP_URL + "/user/type/2", {
+            auth: {
+              username: process.env.REACT_APP_TOKEN_USERNAME ,
+              password: process.env.REACT_APP_TOKEN_PASSWORD ,
+            },
+          })
           .then((ures) => {
             const usersRescuer = ures.data.content;
             this.setState({
@@ -92,49 +98,55 @@ class Admin2 extends React.Component {
     /////////////////////////////////////////////// name is userId
     let id = this.state.data.name;
     console.log("here" + id);
-    let url2 =
-      "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/" +
-      this.state.data.name;
-    axios.get(url2).then((ures) => {
-      var data2 = {
-        address: ures.data.address,
-        firstName: ures.data.firstName,
-        gender: ures.data.gender,
-        id: ures.data.id,
-        lastName: ures.data.lastName,
-        location: ures.data.location,
-        passwd: ures.data.passwd,
-        phone: ures.data.phone,
-        serviceDate: ures.data.serviceDate,
-        serviceRequestDate: ures.data.serviceRequestDate,
-        severity: ures.data.severity,
-        status: ures.data.status,
-        statusDate: ures.data.statusDate,
-        type: this.state.data.type,
-        userName: ures.data.userName,
-      };
+    let url2 = process.env.REACT_APP_OXYGEN_APP_URL + "/user/" + this.state.data.name;
+    axios
+      .get(url2, {
+        auth: {
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
+        },
+      })
+      .then((ures) => {
+        var data2 = {
+          address: ures.data.address,
+          firstName: ures.data.firstName,
+          gender: ures.data.gender,
+          id: ures.data.id,
+          lastName: ures.data.lastName,
+          location: ures.data.location,
+          passwd: ures.data.passwd,
+          phone: ures.data.phone,
+          serviceDate: ures.data.serviceDate,
+          serviceRequestDate: ures.data.serviceRequestDate,
+          severity: ures.data.severity,
+          status: ures.data.status,
+          statusDate: ures.data.statusDate,
+          type: this.state.data.type,
+          userName: ures.data.userName,
+        };
 
-      // const myObj = JSON.parse(data2);
+        // const myObj = JSON.parse(data2);
 
-      console.log(this.state.data.type);
-      console.log(data2);
-      console.log(this.data2);
-      console.log(this.state.data3);
+        console.log(this.state.data.type);
+        console.log(data2);
+        console.log(this.data2);
+        console.log(this.state.data3);
 
-      // Send a put request
-      let url =
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/" +
-        this.state.data.name;
-      axios
-        .put(url, data2, {
-          headers: {
-            "content-type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log(response);
-        });
-    });
+        // Send a put request
+        let url = process.env.REACT_APP_OXYGEN_APP_URL + "/user/" + this.state.data.name;
+        axios
+          .put(url, data2, {
+              "content-type": "application/json",
+              auth: {
+                username: process.env.REACT_APP_TOKEN_USERNAME ,
+                password: process.env.REACT_APP_TOKEN_PASSWORD ,
+              }
+            },
+          )
+          .then((response) => {
+            console.log(response);
+          });
+      });
   };
 
   registerHandler = () => {

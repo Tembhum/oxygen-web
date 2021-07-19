@@ -99,15 +99,13 @@ class Give extends React.Component {
     });
 
     axios
-      .post(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user",
-        this.state.dataUser,
-        {
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      )
+      .post(process.env.REACT_APP_OXYGEN_APP_URL + "/user", this.state.dataUser, {
+        "content-type": "application/json",
+        auth: {
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
+        },
+      })
       .then((res) => {
         this.setState({
           dataUpdate: {
@@ -123,12 +121,13 @@ class Give extends React.Component {
 
         axios
           .put(
-            "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device/" +
-              this.state.id,
+            process.env.REACT_APP_OXYGEN_APP_URL + "/device/" + this.state.id,
             this.state.dataUpdate,
             {
-              headers: {
-                "content-type": "application/json",
+              "content-type": "application/json",
+              auth: {
+                username: process.env.REACT_APP_TOKEN_USERNAME ,
+                password: process.env.REACT_APP_TOKEN_PASSWORD ,
               },
             }
           )

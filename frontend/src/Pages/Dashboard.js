@@ -23,15 +23,21 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     axios
-      .get(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices"
-      )
+      .get(process.env.REACT_APP_OXYGEN_APP_URL + "/devices", {
+        auth: {
+          username: process.env.REACT_APP_TOKEN_USERNAME,
+          password: process.env.REACT_APP_TOKEN_PASSWORD,
+        },
+      })
       .then((dres) => {
         const devices = dres.data.content;
         axios
-          .get(
-            "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/users"
-          )
+          .get(process.env.REACT_APP_OXYGEN_APP_URL + "/users", {
+            auth: {
+              username: process.env.REACT_APP_TOKEN_USERNAME,
+              password: process.env.REACT_APP_TOKEN_PASSWORD,
+            },
+          })
           .then((ures) => {
             const users = ures.data.content;
             this.setState({ devices, users });
@@ -43,15 +49,21 @@ class Dashboard extends React.Component {
 
   componentDidUpdate() {
     axios
-      .get(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/devices"
-      )
+      .get(process.env.REACT_APP_OXYGEN_APP_URL + "/devices", {
+        auth: {
+          username: process.env.REACT_APP_TOKEN_USERNAME,
+          password: process.env.REACT_APP_TOKEN_PASSWORD,
+        },
+      })
       .then((dres) => {
         const devices = dres.data.content;
         axios
-          .get(
-            "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/users"
-          )
+          .get(process.env.REACT_APP_OXYGEN_APP_URL + "/users", {
+            auth: {
+              username: process.env.REACT_APP_TOKEN_USERNAME,
+              password: process.env.REACT_APP_TOKEN_PASSWORD,
+            },
+          })
           .then((ures) => {
             const users = ures.data.content;
             this.setState({ devices, users });
@@ -120,8 +132,10 @@ class Dashboard extends React.Component {
     let phonenum = JSON.parse(sessionStorage.getItem("info")).phone;
     if (barcode && deviceId) {
       let rheader = {
-        headers: {
-          "content-type": "application/json",
+        "content-type": "application/json",
+        auth: {
+          username: "admin",
+          password: "password",
         },
       };
       let rdata = {
@@ -134,12 +148,7 @@ class Dashboard extends React.Component {
           phone: phonenum,
         },
       };
-      axios.put(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/device/" +
-          deviceId,
-        rdata,
-        rheader
-      );
+      axios.put(process.env.REACT_APP_OXYGEN_APP_URL + "/device/" + deviceId, rdata, rheader);
     }
     sessionStorage.setItem("barcode", "");
     sessionStorage.setItem("deviceId", "");
@@ -149,8 +158,12 @@ class Dashboard extends React.Component {
   renderTableData() {
     return this.state.devices.map((device, index) => {
       const { length, id, barcode, name, status, user } = device; //destructuring
-      //      console.log(JSON.parse(user));
-      //      let casenum = JSON.parse(name).casenum;
+      let caseNum;
+      if (status == 2){
+        caseNum = user.caseNo;
+      }else if (status == 4){
+        caseNum = "";
+      }
       return (
         <tr key={id} bgcolor={status == 2 ? "grey" : "white"}>
           <td>
@@ -160,7 +173,7 @@ class Dashboard extends React.Component {
             <font color={status == 4 ? "grey" : "white"}>{barcode}</font>
           </td>
           <td>
-            <font color={status == 4 ? "grey" : "white"}></font>
+            <font color={status == 4 ? "grey" : "white"}>{caseNum}</font>
           </td>
           <td>
             <Button
@@ -210,7 +223,6 @@ class Dashboard extends React.Component {
       );
     } else if (this.state.showMoreInfo) {
       let moreinfo = sessionStorage.getItem("moreinfo");
-      console.log(moreinfo);
       return <Redirect to={`/info/${moreinfo}`} />;
     } else if (sessionStorage.getItem("login") !== "true") {
       return <Redirect push to="/login" />;

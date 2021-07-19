@@ -56,8 +56,13 @@ class Register extends React.Component {
     try {
       console.log("try");
       let res = await axios.get(
-        "http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/username/" +
-          values.user.username
+        process.env.REACT_APP_OXYGEN_APP_URL + "/user/username/" + values.user.username,
+        {
+          auth: {
+            username: process.env.REACT_APP_TOKEN_USERNAME ,
+            password: process.env.REACT_APP_TOKEN_PASSWORD ,
+          },
+        }
       );
       console.log(res);
       this.setState({ hideAlert: false });
@@ -88,9 +93,11 @@ class Register extends React.Component {
     });
     console.log(this.state.data);
     axios
-      .post("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user", this.state.data, {
-        headers: {
-          "content-type": "application/json",
+      .post(process.env.REACT_APP_OXYGEN_APP_URL + "/user", this.state.data, {
+        "content-type": "application/json",
+        auth: {
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
         },
       })
       .then((res) => {

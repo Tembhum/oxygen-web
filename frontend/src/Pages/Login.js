@@ -29,7 +29,12 @@ class Login extends React.Component {
     sessionStorage.setItem("login", "true");
     try {
       axios
-        .get("http://EC2Co-EcsEl-O4IIWNOGGYB-671549001.ap-southeast-1.elb.amazonaws.com:8080/user/username/" + values.username)
+        .get(process.env.REACT_APP_OXYGEN_APP_URL + "/user/username/" + values.username, {
+        auth: {
+          username: process.env.REACT_APP_TOKEN_USERNAME ,
+          password: process.env.REACT_APP_TOKEN_PASSWORD ,
+        },
+      })
         .then((res) => {
           if (values.password == res.data.passwd) {
             delete res.data["passwd"];
