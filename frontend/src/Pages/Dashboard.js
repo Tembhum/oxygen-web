@@ -158,6 +158,12 @@ class Dashboard extends React.Component {
   renderTableData() {
     return this.state.devices.map((device, index) => {
       const { length, id, barcode, name, status, user } = device; //destructuring
+      let caseNum;
+      if (status == 2){
+        caseNum = user.caseNo;
+      }else if (status == 4){
+        caseNum = "";
+      }
       return (
         <tr key={id} bgcolor={status == 2 ? "grey" : "white"}>
           <td>
@@ -167,7 +173,7 @@ class Dashboard extends React.Component {
             <font color={status == 4 ? "grey" : "white"}>{barcode}</font>
           </td>
           <td>
-            <font color={status == 4 ? "grey" : "white"}>{JSON.parse(user).caseNo}</font>
+            <font color={status == 4 ? "grey" : "white"}>{caseNum}</font>
           </td>
           <td>
             <Button
