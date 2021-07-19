@@ -10,6 +10,7 @@ import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 // import Admin from "./Pages/Admin";
 import Admin2 from "./Pages/Admin2";
+import Info from "./Pages/Info";
 
 import Navbar from "./components/Navbar";
 
@@ -43,6 +44,7 @@ function App() {
             <Route path="/admin2">
               <Admin2 />
             </Route>
+            <Route path="/Info/:id" exact={true} component={Info} />
             <Route exact path="/">
               <Dashboard />
             </Route>

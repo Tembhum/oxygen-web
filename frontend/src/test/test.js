@@ -41,6 +41,13 @@ axios
   })
   .then(console.log);
 
+axios.get("http://localhost:8080/devices", {
+  auth: {
+    username: "admin",
+    password: "password",
+  },
+});
+
 // axios
 //   .post("http://localhost:8080/device", dataDevice, {
 //     headers: {
