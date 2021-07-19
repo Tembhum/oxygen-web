@@ -9,6 +9,7 @@ const axios = require("axios").default;
 //   location: "testing centre",
 //   passwd: "password",
 //   type: 1,
+//   caseNo: 1,
 // };
 
 // const dataDevice = {
@@ -16,43 +17,58 @@ const axios = require("axios").default;
 //   name: "",
 //   serialNo: "",
 //   status: 4,
-//   userId: 3,
+//   userId: 1,
 // };
 
-// const dataUpdate = {
-//   barcode: "bbbbbb",
-//   name: "",
-//   serialNo: "",
-//   status: 4,
-//   user: {
-//     id: 3,
-//   },
-// };
+const dataUpdate = {
+  barcode: "bbbbbb",
+  name: "",
+  serialNo: "",
+  status: 4,
+  user: {
+    id: 1,
+  },
+};
 
-// axios.post("http://localhost:8080/user", data, {
-//   headers: {
-//     "content-type": "application/json",
-//   },
-// }).then(console.log);
+axios
+  .post("http://localhost:8080/user", data, { 
+      "content-type": "application/json",
+      auth: {
+        username: "admin",
+        password: "password",
+      },
+  })
+  .then(console.log);
 
 // axios
-//   .post("http://localhost:8080/device", dataDevice, {
-//     headers: {
+//   .post("http://localhost:8080/device", dataDevice, { 
 //       "content-type": "application/json",
-//     },
+//       auth: {
+//         username: "admin",
+//         password: "password",
+//       },
 //   })
 //   .then(console.log);
 
 // axios
-//   .put("http://localhost:8080/device/2", dataUpdate, {
-//     headers: {
+//   .put("http://localhost:8080/device/1", dataUpdate, { 
 //       "content-type": "application/json",
-//     },
+//       auth: {
+//         username: "admin",
+//         password: "password",
+//       },
 //   })
 //   .then(console.log);
 
-try{
- axios.get("http://localhost:8080/user/username/new");
+try {
+  axios
+    .get("http://localhost:8080/devices", {
+      auth: {
+        username: "admin",
+        password: "password",
+      },
+    })
+    .then(res => {console.log(res.data.content)});
 } catch {
   console.log("catch");
 }
