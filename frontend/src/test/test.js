@@ -1,12 +1,9 @@
 const axios = require("axios").default;
-const env = require("dotenv");
-
-//  const env = dotenv.config().parsed;
 
 const data = {
   firstName: "first",
   lastName: "last",
-  userName: "test",
+  userName: "admin",
   phone: "0801234567",
   location: "testing centre",
   passwd: "password",
@@ -14,49 +11,53 @@ const data = {
   caseNo: 1,
 };
 
-// const dataDevice = {
-//   barcode: "cccccc",
-//   name: "",
-//   serialNo: "",
-//   status: 4,
-//   userId: 3,
-// };
+const dataDevice = {
+  barcode: "cccccc",
+  name: "",
+  serialNo: "",
+  status: 4,
+  userId: 1,
+};
 
-// const dataUpdate = {
-//   barcode: "bbbbbb",
-//   name: "",
-//   serialNo: "",
-//   status: 4,
-//   user: {
-//     id: 3,
-//   },
-// };
+const dataUpdate = {
+  barcode: "bbbbbb",
+  name: "",
+  serialNo: "",
+  status: 4,
+  user: {
+    id: 1,
+  },
+};
 
 axios
   .post("http://localhost:8080/user", data, {
       "content-type": "application/json",
       auth: {
-        username: "test",
+        username: "admin",
         password: "password",
       },
   })
   .then(console.log);
 
-// axios
-//   .post("http://localhost:8080/device", dataDevice, {
-//     headers: {
-//       "content-type": "application/json",
-//     },
-//   })
-//   .then(console.log);
+axios
+  .post("http://localhost:8080/device", dataDevice, {
+    "content-type": "application/json",
+    auth: {
+      username: "admin",
+      password: "password",
+    },
+  })
+  .then(console.log);
 
-// axios
-//   .put("http://localhost:8080/device/2", dataUpdate, {
-//     headers: {
-//       "content-type": "application/json",
-//     },
-//   })
-//   .then(console.log);
+axios
+  .put("http://localhost:8080/device/1", dataUpdate, {
+    "content-type": "application/json",
+    auth: {
+      username: "admin",
+      password: "password",
+    },
+  })
+  .then(console.log);
 
 // try {
 //   axios.get("http://localhost:8080/user/username/new");
@@ -82,4 +83,4 @@ axios
 //   )
 //   .then(console.log);
 
-console.log(process.env.LOCAL_URL)
+
