@@ -16,6 +16,7 @@ import "../css/mydiv.css";
 import { Header, Body, Content } from "antd/lib/layout/layout";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
+import Moment from "moment";
 
 const layout = {
   labelCol: {
@@ -94,8 +95,14 @@ class Info extends React.Component {
           {this.state.user.lastName}
         </h6>
         <h6>ที่อยู่: {this.state.user.location}</h6>
-        <h6>วันที่ขอยืมเครื่อง: {this.state.user.serviceRequestDate}</h6>
-        <h6>วันที่คืนเครื่อง: {this.state.user.serviceDate}</h6>
+        <h6>
+          วันที่ขอยืมเครื่อง:{" "}
+          {Moment(this.state.user.serviceRequestDate).format("YYYY-MM-DD")}
+        </h6>
+        <h6>
+          วันที่คืนเครื่อง:{" "}
+          {Moment(this.state.user.serviceDate).format("YYYY-MM-DD")}
+        </h6>
         <div>
           <button onClick={this.backHandler}>Go Back</button>
         </div>

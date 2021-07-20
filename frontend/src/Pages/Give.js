@@ -66,7 +66,7 @@ class Give extends React.Component {
         type: 3,
         caseNo: "",
         servcieRequestDate: null,
-        serviceDate: null
+        serviceDate: null,
       },
 
       dataUpdate: {
@@ -98,18 +98,22 @@ class Give extends React.Component {
         // severity: 0,
         type: 3,
         serviceRequestDate: values.dateGive._d,
-        serviceDate: values.dateReturn._d
+        serviceDate: values.dateReturn._d,
       },
     });
 
     axios
-      .post(process.env.REACT_APP_OXYGEN_APP_URL + "/user", this.state.dataUser, {
-        "content-type": "application/json",
-        auth: {
-          username: process.env.REACT_APP_TOKEN_USERNAME ,
-          password: process.env.REACT_APP_TOKEN_PASSWORD ,
-        },
-      })
+      .post(
+        process.env.REACT_APP_OXYGEN_APP_URL + "/user",
+        this.state.dataUser,
+        {
+          "content-type": "application/json",
+          auth: {
+            username: process.env.REACT_APP_TOKEN_USERNAME,
+            password: process.env.REACT_APP_TOKEN_PASSWORD,
+          },
+        }
+      )
       .then((res) => {
         this.setState({
           dataUpdate: {
@@ -118,7 +122,7 @@ class Give extends React.Component {
             name: values.user.phone,
             barcode: this.props.match.params.barcode,
             user: {
-              id: res.data.userId,
+              id: res.data.id,
             },
           },
         });
@@ -130,8 +134,8 @@ class Give extends React.Component {
             {
               "content-type": "application/json",
               auth: {
-                username: process.env.REACT_APP_TOKEN_USERNAME ,
-                password: process.env.REACT_APP_TOKEN_PASSWORD ,
+                username: process.env.REACT_APP_TOKEN_USERNAME,
+                password: process.env.REACT_APP_TOKEN_PASSWORD,
               },
             }
           )
