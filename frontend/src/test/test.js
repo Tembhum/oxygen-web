@@ -29,35 +29,35 @@ const dataUpdate = {
   },
 };
 
-// axios
-//   .post("http://localhost:8080/user", data, {
-//       "content-type": "application/json",
-//       auth: {
-//         username: "admin",
-//         password: "password",
-//       },
-//   })
-//   .then(console.log);
+axios
+  .post("http://localhost:8080/user", data, {
+      "content-type": "application/json",
+      auth: {
+        username: "admin",
+        password: "password",
+      },
+  })
+  .then(console.log);
 
-// axios
-//   .post("http://localhost:8080/device", dataDevice, {
-//     "content-type": "application/json",
-//     auth: {
-//       username: "admin",
-//       password: "password",
-//     },
-//   })
-//   .then(console.log);
+axios
+  .post("http://localhost:8080/device", dataDevice, {
+    "content-type": "application/json",
+    auth: {
+      username: "admin",
+      password: "password",
+    },
+  })
+  .then(console.log);
 
-// axios
-//   .put("http://localhost:8080/device/1", dataUpdate, {
-//     "content-type": "application/json",
-//     auth: {
-//       username: "admin",
-//       password: "password",
-//     },
-//   })
-//   .then(console.log);
+axios
+  .put("http://localhost:8080/device/1", dataUpdate, {
+    "content-type": "application/json",
+    auth: {
+      username: "admin",
+      password: "password",
+    },
+  })
+  .then(console.log);
 
 // try {
 //   axios.get("http://localhost:8080/user/username/new");
@@ -65,20 +65,11 @@ const dataUpdate = {
 //   console.log("catch");
 // }
 
-try {
-  axios
-    .get("https://oxyfight.thaicna.org:8443/users", {
-      auth: {
-        username: "oxyapi",
-        password: "alwaysbekind",
-      },
-    })
-    .then((res) => {
-      console.log(res.data.content);
-    });
-} catch (e) {
-  console.log(e);
-}
+// try {
+//   axios.get("http://localhost:8080/user/username/test").then(console.log);
+// } catch (e) {
+//   console.log(e);
+// }
 
 // axios
 //   .get(
