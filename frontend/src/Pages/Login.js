@@ -25,28 +25,31 @@ class Login extends React.Component {
     sessionStorage.setItem("info", "");
   }
 
-  onFinish = (values) => {
+  onFinish = async (values) => {
     sessionStorage.setItem("login", "true");
     try {
-      axios
-        .get(process.env.REACT_APP_OXYGEN_APP_URL + "/user/username/" + values.username, {
-        auth: {
-          username: process.env.REACT_APP_TOKEN_USERNAME ,
-          password: process.env.REACT_APP_TOKEN_PASSWORD ,
-        },
-      })
-        .then((res) => {
-          if (values.password == res.data.passwd) {
-            delete res.data["passwd"];
-            sessionStorage.setItem("info", JSON.stringify(res.data));
-            //console.log(JSON.stringify(res.data));
-            this.setState({ redirect: "home" });
-          } else {
-            this.onFinishFailed("Wrong Password");
-            this.setState({ shouldHide: false });
-          }
-        });
-    } catch {
+      let res = await axios.get(
+        process.env.REACT_APP_OXYGEN_APP_URL +
+          "/user/username/" +
+          values.username,
+        {
+          auth: {
+            username: process.env.REACT_APP_TOKEN_USERNAME,
+            password: process.env.REACT_APP_TOKEN_PASSWORD,
+          },
+        }
+      );
+      if (values.password == res.data.passwd) {
+        console.log(res);
+        delete res.data["passwd"];
+        sessionStorage.setItem("info", JSON.stringify(res.data));
+        this.setState({ redirect: "home" });
+      } else {
+        this.onFinishFailed("Wrong Password");
+        this.setState({ shouldHide: false });
+      }
+    } catch (e) {
+      console.log("catch");
       this.setState({ shouldHide: false });
     }
   };
