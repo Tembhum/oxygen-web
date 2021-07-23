@@ -129,6 +129,7 @@ class Dashboard extends React.Component {
   }
 
   returnDevice(barcode, deviceId) {
+    console.log(Date());
     let phonenum = JSON.parse(sessionStorage.getItem("info")).phone;
     if (barcode && deviceId) {
       let rheader = {
@@ -146,6 +147,7 @@ class Dashboard extends React.Component {
         user: {
           id: JSON.parse(sessionStorage.getItem("info")).id,
           phone: phonenum,
+          serviceDate: Date(),
         },
       };
       axios.put(process.env.REACT_APP_OXYGEN_APP_URL + "/device/" + deviceId, rdata, rheader);
