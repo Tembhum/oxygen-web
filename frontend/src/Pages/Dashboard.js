@@ -134,8 +134,8 @@ class Dashboard extends React.Component {
       let rheader = {
         "content-type": "application/json",
         auth: {
-          username: "admin",
-          password: "password",
+          username: process.env.REACT_APP_TOKEN_USERNAME,
+          password: process.env.REACT_APP_TOKEN_PASSWORD,
         },
       };
       let rdata = {

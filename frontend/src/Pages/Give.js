@@ -87,20 +87,39 @@ class Give extends React.Component {
     } catch (e) {
       lastname = "";
     }
-    this.setState({
-      dataUser: {
-        firstName: firstname,
-        lastName: lastname,
-        age: values.user.age,
-        phone: values.user.phone,
-        caseNo: values.user.caseNo,
-        location: values.user.address,
-        // severity: 0,
-        type: 3,
-        serviceRequestDate: values.dateGive._d,
-        serviceDate: values.dateReturn._d,
-      },
-    });
+
+    try {
+      this.setState({
+        dataUser: {
+          firstName: firstname,
+          lastName: lastname,
+          age: values.user.age,
+          phone: values.user.phone,
+          caseNo: values.user.caseNo,
+          location: values.user.address,
+          // severity: 0,
+          type: 3,
+          serviceRequestDate: values.dateGive._d,
+          serviceDate: values.dateReturn._d,
+        },
+      });
+    } catch {
+      console.log("catch")
+      this.setState({
+        dataUser: {
+          firstName: firstname,
+          lastName: lastname,
+          age: values.user.age,
+          phone: values.user.phone,
+          caseNo: values.user.caseNo,
+          location: values.user.address,
+          // severity: 0,
+          type: 3,
+          serviceRequestDate: values.dateGive._d,
+          serviceDate: null,
+        },
+      });
+    }
 
     axios
       .post(
